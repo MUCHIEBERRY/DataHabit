@@ -1,57 +1,118 @@
 """
 behavior_analyzer.py
---------------------
-Analyzes submission delays and classifies academic behavior.
+-------------------------
+Analyzes student submission behavior across multiple tasks.
+Includes structured error handling and advanced behavior classification.
 """
 
-from datetime import datetime
 import statistics
+from datetime import datetime
 from .task_data import TaskData
 
 
-class BehaviorAnalyzer(TaskData):
-    """Extends TaskData with behavior logic."""
+class BehaviorAnalyzerError(Exception):
+    """Base error for BehaviorAnalyzer."""
+    def __init__(self, message):
+        super().__init__(f"[BehaviorAnalyzerError] {message}")
 
-    def __init__(self, student_id, task_name, submission_time):
-        super().__init__(student_id, task_name, submission_time)
-        self._behavior_label = None
+
+class InvalidTaskListError(BehaviorAnalyzerError):
+    """Raised when the input to BehaviorAnalyzer is not a list of TaskData objects."""
+    def __init__(self):
+        super().__init__("Tasks must be provided as a list of TaskData objects.")
+
+
+class DelayComputationError(BehaviorAnalyzerError):
+    """Raised when delay cannot be computed."""
+    def __init__(self, task):
+        super().__init__(f"Failed to compute delay for task: {task}")
+
+
+class ClassificationError(BehaviorAnalyzerError):
+    """Raised when behavior classification cannot be determined."""
+    def __init__(self):
+        super().__init__("Unable to classify behavior. Ensure tasks and due dates are valid.")
+
+
+class BehaviorAnalyzer:
+    """
+    Analyzes submission behavior patterns based on multiple tasks.
+    Computes delay history, behavior labels, and statistical summaries.
+    """
+
+    def __init__(self, tasks):
+        if not isinstance(tasks, list) or not all(isinstance(t, TaskData) for t in tasks):
+            raise InvalidTaskListError()
+
+        self.tasks = tasks
         self._delay_history = []
+        self._behavior_label = None
+
+    # --------------------------------------------------------
 
     def classify_behavior(self, due_date):
-        if not isinstance(due_date, datetime):
-            raise TypeError("due_date must be a datetime object.")
+        """
+        Computes delays for all tasks and classifies user behavior.
+        Raises errors if delay computation fails.
+        """
 
-        delay = self.get_delay(due_date)
-        delay_hours = delay.total_seconds() / 3600
-        self._delay_history.append(delay_hours)
+        # Reset previous delay history
+        self._delay_history = []
 
-        avg = statistics.mean(self._delay_history)
+        for task in self.tasks:
+            try:
+                delay = task.get_delay(due_date)
+            except Exception:
+                raise DelayComputationError(task)
 
-        # --- RULES ---
-        if avg > 24:
+            delay_hours = delay.total_seconds() / 3600
+            self._delay_history.append(delay_hours)
+
+        if not self._delay_history:
+            raise ClassificationError()
+
+        avg_delay = statistics.mean(self._delay_history)
+
+        # ------------------------------
+        # ADVANCED CLASSIFICATION RULES
+        # ------------------------------
+        if avg_delay > 48:
+            self._behavior_label = "Severe Procrastinator"
+        elif 24 < avg_delay <= 48:
             self._behavior_label = "Procrastinator"
-        elif avg < -24:
-            self._behavior_label = "Early Finisher"
-        elif -3 <= avg <= 3:
+        elif -3 <= avg_delay <= 3:
             self._behavior_label = "Consistent Worker"
+        elif avg_delay < -24:
+            self._behavior_label = "Early Finisher"
         else:
-            self._behavior_label = "Moderate / Mixed"
+            self._behavior_label = "Normal / Mixed"
 
         return self._behavior_label
 
-    def get_statistics(self):
-        if not self._delay_history:
-            return {"message": "No delay history recorded yet."}
+    # --------------------------------------------------------
 
-        avg = statistics.mean(self._delay_history)
-        variation = statistics.stdev(self._delay_history) if len(self._delay_history) > 1 else 0
+    def get_statistics(self):
+        """
+        Returns a dictionary summary of behavior statistics.
+        Requires classify_behavior() to be run first.
+        """
+
+        if not self._delay_history:
+            raise ClassificationError()
+
+        avg_delay = statistics.mean(self._delay_history)
+        std_dev = statistics.stdev(self._delay_history) if len(self._delay_history) > 1 else 0
 
         return {
-            "tasks_analyzed": len(self._delay_history),
-            "avg_delay_hours": avg,
-            "consistency_std_dev": variation,
+            "tasks_analyzed": len(self.tasks),
+            "avg_delay_hours": avg_delay,
+            "std_dev_delay": std_dev,
             "behavior_label": self._behavior_label
         }
 
-    def __repr__(self):
-        return f"BehaviorAnalyzer(student={self._student_id}, label={self._behavior_label})"
+    # --------------------------------------------------------
+
+    def __str__(self):
+        return f"BehaviorAnalyzer(label={self._behavior_label})"
+
+
