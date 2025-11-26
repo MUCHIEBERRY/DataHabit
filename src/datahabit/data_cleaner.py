@@ -1,45 +1,91 @@
 """
 data_cleaner.py
----------------
-Cleans raw timestamps, handles invalid formats, deduplicates, and sorts data.
+--------------------
+Provides utilities for timestamp cleaning, validation, and conversion.
+Includes custom error types for robust data processing.
 """
 
 from datetime import datetime
 
 
+class DataCleanerError(Exception):
+    """Base exception for DataCleaner."""
+    def __init__(self, message):
+        super().__init__(f"[DataCleanerError] {message}")
+
+
+class InvalidTimestampError(DataCleanerError):
+    """Raised when a timestamp string is invalid."""
+    def __init__(self, value):
+        super().__init__(f"Invalid timestamp format: '{value}'. Expected 'YYYY-MM-DD HH:MM:SS'.")
+
+
+class NullEntryError(DataCleanerError):
+    """Raised when encountering unexpected None or empty entries."""
+    def __init__(self):
+        super().__init__("Encountered a null or empty timestamp entry.")
+
+
 class DataCleaner:
-    """Cleans and standardizes raw timestamp data."""
+    """Handles cleaning and validation of timestamp data."""
 
-    def __init__(self, raw_timestamps):
-        if not isinstance(raw_timestamps, list):
-            raise TypeError("raw_timestamps must be a list.")
+    # --------------------------------------------------------
 
-        self.raw = raw_timestamps
-        self.cleaned = []
+    @staticmethod
+    def validate_timestamp(timestamp_str):
+        """
+        Returns True if a timestamp follows the correct format.
+        """
+        if timestamp_str is None or timestamp_str == "":
+            return False
 
-    def clean(self):
-        """Convert raw timestamps to datetime objects."""
-        for ts in self.raw:
-            if isinstance(ts, datetime):
-                self.cleaned.append(ts)
-                continue
+        try:
+            datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+            return True
+        except Exception:
+            return False
 
-            if isinstance(ts, str):
-                try:
-                    parsed = datetime.fromisoformat(ts)
-                    self.cleaned.append(parsed)
-                except ValueError:
-                    print(f"[WARNING] Skipped invalid timestamp: {ts}")
-                continue
+    # --------------------------------------------------------
 
-            print(f"[WARNING] Skipped unsupported type: {ts}")
+    @staticmethod
+    def fix_missing(entries, replacement="MISSING"):
+        """
+        Replaces missing timestamps (None or "") with a replacement.
+        """
+        cleaned = []
 
-        # Deduplicate + sort
-        self.cleaned = sorted(list(set(self.cleaned)))
-        return self.cleaned
+        for ts in entries:
+            if ts is None or ts == "":
+                cleaned.append(replacement)
+            else:
+                cleaned.append(ts)
 
-    def count_invalid(self):
-        """Counts how many raw items are invalid."""
-        valid = len(self.cleaned)
-        total = len(self.raw)
-        return total - valid
+        return cleaned
+
+    # --------------------------------------------------------
+
+    @staticmethod
+    def convert_all(entries):
+        """
+        Converts all valid timestamps into datetime objects.
+        Invalid entries raise structured errors.
+        """
+        converted = []
+
+        for ts in entries:
+            if ts is None or ts == "":
+                raise NullEntryError()
+
+            try:
+                converted.append(datetime.strptime(ts, "%Y-%m-%d %H:%M:%S"))
+            except Exception:
+                raise InvalidTimestampError(ts)
+
+        return converted
+
+    # --------------------------------------------------------
+
+    def __repr__(self):
+        return "DataCleaner(timestamp utilities)"
+
+
