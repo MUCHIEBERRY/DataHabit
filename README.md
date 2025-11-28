@@ -41,18 +41,22 @@ pip install datahabit
 ```
 
 # Example usage
-```
-from datahabit import DataHabit
+```python
+from datahabit import (
+    TaskData,
+    DataCleaner,
+    BehaviorAnalyzer
+)
 
-# Sample data
 tasks = [
-    {"task": "Quiz 1", "deadline": "2024-10-01 23:59", "submitted": "2024-10-01 21:30"},
-    {"task": "Assignment", "deadline": "2024-10-05 23:59", "submitted": "2024-10-06 01:10"}
+    TaskData("Quiz 1", "2024-10-01 23:59", "2024-10-01 21:30"),
+    TaskData("Assignment", "2024-10-05 23:59", "2024-10-06 01:10")
 ]
 
-habit = DataHabit(tasks)
+clean = DataCleaner().clean(tasks)
+analyze = BehaviorAnalyzer(clean).classify()
 
-print(habit.analyze())
+print(analyze)
 
 ```
 
@@ -74,4 +78,3 @@ print(habit.analyze())
 | **Java, Armisty Genia L.**   | Visualization Developer       | Graphs, plots, and visual output designs |
 | **Trillo, Rodney G.**        | Data Handler                  | Timestamp processing and data cleaning   |
 
-# Sample code blocks
