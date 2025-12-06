@@ -84,8 +84,60 @@ class DataCleaner:
         return converted
 
     # --------------------------------------------------------
+    # NEW: Timestamp normalizer
+    # --------------------------------------------------------
+
+    @staticmethod
+    def normalize_timestamp(ts):
+        """
+        Normalizes messy date/time strings into 'YYYY-MM-DD HH:MM:SS'.
+
+        Accepts:
+        - YYYY-MM-DD
+        - YYYY/MM/DD
+        - MM/DD/YYYY
+        - with or without HH:MM:SS
+        - leading/trailing spaces
+
+        Raises:
+            NullEntryError, InvalidTimestampError
+        """
+
+        if ts is None or ts.strip() == "":
+            raise NullEntryError()
+
+        ts = ts.strip()
+
+        possible_formats = [
+            "%Y-%m-%d %H:%M:%S",
+            "%Y-%m-%d",
+            "%Y/%m/%d",
+            "%m/%d/%Y",
+            "%Y/%m/%d %H:%M:%S",
+            "%m/%d/%Y %H:%M:%S",
+        ]
+
+        for fmt in possible_formats:
+            try:
+                dt = datetime.strptime(ts, fmt)
+
+                # If date-only, attach default 00:00:00 time
+                if fmt in ["%Y-%m-%d", "%Y/%m/%d", "%m/%d/%Y"]:
+                    dt = datetime(dt.year, dt.month, dt.day, 0, 0, 0)
+
+                return dt.strftime("%Y-%m-%d %H:%M:%S")
+
+            except Exception:
+                continue
+
+        # None of the formats matched
+        raise InvalidTimestampError(ts)
+
+    # --------------------------------------------------------
 
     def __repr__(self):
         return "DataCleaner(timestamp utilities)"
+
+
 
 
