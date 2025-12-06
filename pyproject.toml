@@ -5,25 +5,29 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "datahabit"
 version = "0.1.0"
-description = "A Python library for analyzing academic behavior and productivity patterns using student task timestamps."
-authors = [
-  { name = "Aira Grettel C. Dahe" },
-  { name = "Karylle Lynn L. Dellosa" },
-  { name = "Carmel Marianne T. Hayag" },
-  { name = "Armisty Genia L. Java" },
-  { name = "Rodney G. Trillo" }
-]
+description = "A Python library designed to analyze academic behavior and productivity patterns based on students’ task timestamps."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
+
+authors = [
+    { name = "Dahe, Aira Grettel C." },
+    { name = "Dellosa, Karylle Lynn L." },
+    { name = "Hayag, Carmel Marianne T." },
+    { name = "Java, Armisty Genia L." },
+    { name = "Trillo, Rodney G." }
+]
+
 keywords = ["behavior-analysis", "productivity", "student-habits", "task-difficulty"]
 
 dependencies = [
-  "pandas",
-  "numpy"
+    "pandas",
+    "numpy"
 ]
 
 [project.urls]
 Homepage = "https://github.com/MUCHIEBERRY/DataHabit"
 Repository = "https://github.com/MUCHIEBERRY/DataHabit"
 
+[tool.setuptools.packages.find]
+where = ["src"]
