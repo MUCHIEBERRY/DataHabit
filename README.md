@@ -66,7 +66,21 @@ print(analyze)
 | **behavior_analyzer.py** | Groups all behavior-related features, including behavior classification, pattern detection, difficulty estimation, habit scoring, and general performance analysis. Identifies trends such as procrastination, consistency, night-owl patterns, and problem tasks. |
 | **data_cleaner.py**      | Cleans and preprocesses raw task data by fixing missing timestamps, correcting invalid date formats, and standardizing input before analysis.                                 |
 | **task_data.py**         | Stores and manages task information (deadlines, submission times, task names) and provides structured data used by all analyzers and predictors.                              |
-| **visualizer.py**        | Generates visual graphs (line charts, bar charts, timelines) to show submission patterns, productivity trends, and behavior insights.                                         |
+| **visualizer.py**        | Generates visual graphs (line charts, bar charts, timelines) to show submission patterns, productivity trends, and behavior insights.  
+|
+
+# Relationships Between Modules
+| Component / Module      | What It Does                                                             | Inputs It Uses                                                          | Outputs It Produces                    | How It Connects to Others                                          |
+| ----------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------ |
+| **TaskData**            | Stores all task information (name, deadline, submission time).           | Raw timestamps from dataset.                                            | Clean, structured task objects.        | Base input used by *all* modules.                                  |
+| **DataCleaner**         | Fixes missing/invalid timestamps, standardizes datetime format.          | `TaskData` objects.                                                     | Cleaned list of tasks.                 | Sends cleaned tasks to `BehaviorAnalyzer`, `PatternDetector`, etc. |
+| **BehaviorAnalyzer**    | Classifies behavior: procrastinator, consistent, early finisher.         | Clean tasks from `DataCleaner`.                                         | Behavior labels + scores.              | Feeds results to `HabitScore` and `ReportGenerator`.               |
+| **PatternDetector**     | Detects study rhythms (night-owl/early-bird), trends, weekly routines.   | Clean tasks.                                                            | Pattern summary.                       | Included in the final report via `ReportGenerator`.                |
+| **DifficultyEstimator** | Estimates perceived difficulty based on submission timing patterns.      | Clean tasks + time difference from deadlines.                           | Difficulty rating per task or student. | Results included in overall habit scoring and reporting.           |
+| **HabitScore**          | Produces a numerical score summarizing student's time-management habits. | Behavior results + patterns + difficulty scores.                        | Single habit score (0–100).            | Included in the final summary by `ReportGenerator`.                |
+| **DeadlinePredictor**   | Predicts how early/late future tasks might be submitted.                 | Historical cleaned tasks.                                               | Predicted submission timing.           | Included in advanced analytics and reports.                        |
+| **ReportGenerator**     | Combines all outputs into a JSON/text report.                            | Behavior, pattern analysis, difficulty score, habit score, predictions. | Final student report.                  | Final output consumed by user or UI.                               |
+| **Visualizer**          | Creates graphs (line, bar, timelines).                                   | Clean tasks + analysis outputs.                                         | PNG charts or inline plots.            | Used to show results visually in dashboards or Jupyter.            |
 
 
 # Contributors
