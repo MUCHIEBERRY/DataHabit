@@ -1,4 +1,4 @@
-,student_id,study_hours,sleep_hours,task_completed,distractions_count,day,start_time,end_time,productivity_score,task_name,start,due_date,submission_time,week,consistency,breaks_taken,average_focus_minutes,Duration (hrs),complexity,energy_required
+student,student_id,study_hours,sleep_hours,task_completed,distractions_count,day,start_time,end_time,productivity_score,task_name,start,due_date,submission_time,week,consistency,breaks_taken,average_focus_minutes,Duration (hrs),complexity,energy_required
 Aira Grettel Dahe,2024245901,7,4,3,3,Wednesday,8:30,15:00,82,OOP Project,11/7/2025,2025-12-13 10:00:00,2025-12-13 9:00:00,2,88,4,52,7,High,High
 Armisty Genia Java,2024300450,3,5,3,2,Monday,13:10,18:00,78,Data Visualization,12/8/2025,2025-12-10 23:59:00,2025-12-12 5:25:00,2,85,3,48,5,Medium,Medium
 Carmel Marianne Hayag,2024300972,5,7,2,5,Thursday,12:00,17:00,70,HCI PIT,11/3/2025,2025-12-14 14:00:00,2025-12-10 11:50:00,3,80,6,44,5,High,High
