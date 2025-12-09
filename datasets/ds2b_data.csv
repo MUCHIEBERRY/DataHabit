@@ -1,0 +1,20 @@
+,student_id,study_hours,sleep_hours,task_completed,distractions_count,day,start_time,end_time,productivity_score,task_name,start,due_date,submission_time,week,consistency,breaks_taken,average_focus_minutes,Duration (hrs),complexity,energy_required
+Aira Grettel Dahe,2024245901,7,4,3,3,Wednesday,8:30,15:00,82,OOP Project,11/7/2025,2025-12-13 10:00:00,2025-12-13 9:00:00,2,88,4,52,7,High,High
+Armisty Genia Java,2024300450,3,5,3,2,Monday,13:10,18:00,78,Data Visualization,12/8/2025,2025-12-10 23:59:00,2025-12-12 5:25:00,2,85,3,48,5,Medium,Medium
+Carmel Marianne Hayag,2024300972,5,7,2,5,Thursday,12:00,17:00,70,HCI PIT,11/3/2025,2025-12-14 14:00:00,2025-12-10 11:50:00,3,80,6,44,5,High,High
+Karylle Dellosa,2024300111,4,5,3,5,Tuesday,10:00,14:00,72,Data Structures and Algorithms PIT,11/20/2025,2025-12-04 22:00:00,2025-11-30 23:00:00,3,78,5,45,4,High,High
+Rodney Trillo,2024161301,,8,1,7,Friday,19:00,21:00,56,Machine Learning Project,12/3/2025,2025-12-08 8:30:00,2025-12-10 8:00:00,4,60,7,38,2,High,Medium
+Sodais Angni,2024520711,1,9,1,6,Friday,18:00,19:00,58,OOP Project,11/7/2025,2025-12-13 10:00:00,2025-12-15 10:59:00,4,62,6,36,1,,High
+Reymart Padillo,2024300966,,8,2,3,Thursday,13:00,15:00,68,Residual Analysis Activity,11/14/2025,2025-11-28 23:59:00,2025-12-01 16:00:00,3,75,4,42,2,Medium,Medium
+Jave Melchor Odchigue,2024240801,2,8,3,3,Wednesday,8:00,10:00,76,OOP Project,11/7/2025,2025-12-13 10:00:00,2025-12-13 11:00:00,4,82,3,43,2,,High
+Cassandra Diala,2024310999,5,5,4,1,Monday,5:00,10:00,90,HCI PIT,11/3/2025,2025-12-14 14:00:00,2025-12-11 11:00:00,2,92,2,55,5,High,High
+Juhaira Mercado,2024302641,,6,3,4,Friday,12:00,18:00,80,Machine Learning Project,12/3/2025,2025-12-08 8:30:00,2025-12-10 22:30:00,3,84,4,50,6,High,Medium
+Alexandra Marshburn,2024300901,6,7,4,1,Friday,3:00,9:00,91,OOP Project,11/7/2025,2025-12-13 10:00:00,2025-12-11 10:00:00,4,95,2,58,6,,High
+Eduardo Pamplona III,2024300621,,7,3,5,Thursday,4:00,7:00,74,Data Visualization,12/8/2025,2025-12-10 23:59:00,2025-12-10 22:00:00,2,79,5,47,3,,Medium
+Rynzo Raphael Ruiz,2024301430,,5,2,7,Tuesday,23:00,1:00,52,Residual Analysis Activity,11/14/2025,2025-11-28 23:59:00,2025-12-02 20:30:00,4,58,7,35,2,,Medium
+Harold Hope Magtrayo,2024410500,1,8,2,7,Saturday,22:00,1:00,54,HCI PIT,11/3/2025,2025-12-14 14:00:00,2025-12-16 5:00:00,3,60,6,37,3,High,High
+Johann Lloyd Megalbio,2024305610,2,8,2,6,Monday,20:00,23:00,66,OOP Project,11/7/2025,2025-12-13 10:00:00,2025-12-14 10:00:00,4,72,5,41,3,High,High
+Mark Estorgio,2024300580,,5,0,8,Thursday,22:00,0:00,40,Machine Learning Project,11/3/2025,2025-12-08 8:30:00,2025-12-20 13:00:00,3,55,8,30,2,,Medium
+Jason Ray de Guia,2024307891,4,8,3,3,Saturday,22:00,3:00,77,Residual Analysis Activity,11/14/2025,2025-11-28 23:59:00,2025-11-28 21:00:00,3,82,3,46,5,Medium,Medium
+Art John Apugan,2024301632,2,6,2,4,Monday,8:00,12:00,69,Linear Regression Assignment,11/28/2025,2025-12-04 13:30:00,2025-12-09 18:50:00,2,74,4,42,4,Medium,Medium
+Albrien Dealino,2024300321,2,6,0,7,Tuesday,17:00,0:00,38,Data Visualization,12/8/2025,2025-12-10 23:59:00,2025-12-20 22:00:00,2,52,7,28,3,Medium,Medium
