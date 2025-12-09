@@ -42,23 +42,34 @@ pip install datahabit
 
 # Example usage
 ```python
-from datahabit import (
-    TaskData,
-    DataCleaner,
-    BehaviorAnalyzer
+from datahabit.task_data import TaskData
+from datahabit.predictor import DeadlinePredictor
+import pandas as pd
+
+# Example: load dataset
+df = pd.read_csv("sample_student_logs.csv")
+
+# Convert first row into a TaskData object
+row = df.iloc[0]
+
+task = TaskData(
+    student_id=row["student_id"],
+    task_name=row["task_name"],
+    submission_time=row["submission_time"],
+    due_date=row.get("due_date")
 )
 
-tasks = [
-    TaskData("Quiz 1", "2024-10-01 23:59", "2024-10-01 21:30"),
-    TaskData("Assignment", "2024-10-05 23:59", "2024-10-06 01:10")
-]
+# Load trained model
+predictor = DeadlinePredictor("model.pkl")
 
-clean = DataCleaner().clean(tasks)
-analyze = BehaviorAnalyzer(clean).classify()
+# Predict if the student will be late or on time
+result = predictor.predict(task)
 
-print(analyze)
+print("Prediction:", result)
+
 
 ```
+
 
 # Module descriptions
 | **Module**               | **Description**                                                                                                                                                               |
@@ -68,6 +79,7 @@ print(analyze)
 | **task_data.py**         | Stores and manages task information (deadlines, submission times, task names) and provides structured data used by all analyzers and predictors.                              |
 | **visualizer.py**        | Generates visual graphs (line charts, bar charts, timelines) to show submission patterns, productivity trends, and behavior insights.  
 |
+
 
 # Relationships Between Modules
 | Component / Module      | What It Does                                                             | Inputs It Uses                                                          | Outputs It Produces                    | How It Connects to Others                                          |
